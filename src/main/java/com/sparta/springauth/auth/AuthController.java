@@ -1,9 +1,11 @@
 package com.sparta.springauth.auth;
 
+import com.sparta.springauth.jwt.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,12 @@ import java.net.URLEncoder;
 public class AuthController {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    private final JwtUtil jwtUtil;
+
+    public AuthController(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @GetMapping("/create-cookie")
     public String createCookie(HttpServletResponse res) {
