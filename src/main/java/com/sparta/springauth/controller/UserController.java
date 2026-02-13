@@ -1,7 +1,9 @@
 package com.sparta.springauth.controller;
 
+import com.sparta.springauth.dto.LoginRequestDto;
 import com.sparta.springauth.dto.SignupRequestDto;
 import com.sparta.springauth.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +28,20 @@ public class UserController {
     }
 
     @PostMapping("user/signup")
-    public String signup(SignupRequestDto requestDto){  /** 브라우저에서의 입력값을 Dto 에 자동 바인딩 */
+    public String signup(SignupRequestDto requestDto){  /* 브라우저에서의 입력값을 Dto 에 자동 바인딩 */
         userService.signup(requestDto);
 
-        return "redirect:/api/user/login-page"; /** 브라우저에게 다시 GET 요청을 보내라고 지시(로그인 페이지로 이동) */
+        return "redirect:/api/user/login-page"; /* 브라우저에게 다시 GET 요청을 보내라고 지시(로그인 페이지로 이동) */
+    }
+
+    @PostMapping("/user/login")
+    public String login(LoginRequestDto requestDto, HttpServletResponse res) {
+        try{
+            userService.login(requestDto, res);
+        } catch (Exception e){
+            return "redirect:/api/user/login-page?error";
+        }
+
+        return "redirect:/";
     }
 }
