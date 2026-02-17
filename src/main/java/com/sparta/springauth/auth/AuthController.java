@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @GetMapping("/get-cookie")
-    public String getCookie(@CookieValue(AUTHORIZATION_HEADER) String value) {
+    public String getCookie(@CookieValue(AUTHORIZATION_HEADER) String value) {  // Cookie value값을 가져오기 위한 어노테이션
         System.out.println("value = " + value);
 
         return "getCookie : " + value;
